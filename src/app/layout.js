@@ -1,5 +1,14 @@
+import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import 'react-toastify/dist/ReactToastify.css';
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import { ToastContainer } from "react-toastify";
+import AdminContextProvider from '@/context/AdminContextProvider'
+import PostContextProvider from '@/context/postContext/PostContextProvider'
+import OverviewContextProvider from '@/context/overview/overviewContext_provider'
+import SubAdmin_provider from '@/context/sub_admin/SubAdmin_provider'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,7 +20,26 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AdminContextProvider>
+
+          <SubAdmin_provider>
+
+            <PostContextProvider>
+              <OverviewContextProvider>
+
+                <ToastContainer />
+                <Navbar />
+                {children}
+                {/* <Footer /> */}
+
+                <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+              </OverviewContextProvider>
+            </PostContextProvider>
+          </SubAdmin_provider>
+        </AdminContextProvider>
+      </body>
+
     </html>
   );
 }
